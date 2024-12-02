@@ -1,51 +1,31 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"math"
 	"os"
 	"slices"
-	"strconv"
-	"strings"
 
-	"github.com/markwatson/pkg/util"
+	"github.com/markwatson/advent_2024/pkg/util"
 )
 
 func readInFile(filename string) ([]int64, []int64) {
-	// open file and read line by line
-	file, err := os.Open(filename)
-    util.Check(err)
-	defer file.Close()
+	// Read in numbers
+	contents, err := util.ReadInNumbers(filename, int64(0))
+	util.Check(err)
 
 	// Outputs
 	var leftValues []int64
 	var rightValues []int64
 
-	// Read in
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		words := strings.Fields(line)
-		if len(words) != 2 {
-			// TODO: maybe just ignore?
-			log.Fatalf("Ignoring line: %s", line)
+	// Parse
+	for _, row := range contents {
+		if len(row) != 2 {
+			log.Fatalf("Invalid row: %v", row)
 		}
-
-		// convert strings to int64
-		left, err := strconv.ParseInt(words[0], 10, 64)
-		check(err)
-		right, err := strconv.ParseInt(words[1], 10, 64)
-		check(err)
-
-		// append to arrays
-		leftValues = append(leftValues, left)
-		rightValues = append(rightValues, right)
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
+		leftValues = append(leftValues, row[0])
+		rightValues = append(rightValues, row[1])
 	}
 
 	return leftValues, rightValues

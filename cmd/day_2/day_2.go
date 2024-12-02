@@ -1,51 +1,28 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"math"
 	"os"
-	"strconv"
-	"strings"
-)
 
-// TODO: maybe make a library for these helpers?
-func check(e error) {
-    if e != nil {
-        log.Fatal(e)
-    }
-}
+	"github.com/markwatson/advent_2024/pkg/util"
+)
 
 type Level int64
 type Report []Level
 
 func readInFile(filename string) ([]Report) {
-	// open file and read line by line
-	file, err := os.Open(filename)
-    check(err)
-	defer file.Close()
+	contents, err := util.ReadInNumbers(filename, int64(0))
+	util.Check(err)
 
-	// Outputs
 	var reports []Report
-
-	// Read in
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		words := strings.Fields(line)
-
+	for _, row := range contents {
 		var report Report
-		for _, word := range words {
-			value, err := strconv.ParseInt(word, 10, 64)
-			check(err)
-			report = append(report, Level(value))
+		for _, val := range row {
+			report = append(report, Level(val))
 		}
 		reports = append(reports, report)
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
 	}
 
 	return reports
