@@ -1,14 +1,30 @@
-package main
+package day1
 
 import (
 	"fmt"
 	"log"
 	"math"
-	"os"
 	"slices"
 
 	"github.com/markwatson/advent_2024/pkg/util"
 )
+
+type Day1 struct {
+
+}
+
+func (d Day1) Run(inputFile string) {
+	// read
+	left, right := readInFile(inputFile)
+
+	// find the difference
+	diff := findDiff(left, right)
+	fmt.Printf("Total difference: %d\n", diff)
+
+	// find similarity score
+	similarity := findSimilarity(left, right)
+	fmt.Printf("Similarity score: %d\n", similarity)
+}
 
 func readInFile(filename string) ([]int64, []int64) {
 	// Read in numbers
@@ -67,23 +83,4 @@ func findSimilarity(left []int64, right []int64) int64 {
 	}
 
 	return totalScore
-}
-
-func main() {
-	// check arguments
-	if len(os.Args) != 2 {
-		log.Fatalf("Usage: %s <filename>", os.Args[0])
-    }
-	fname := os.Args[1]
-
-	// read
-	left, right := readInFile(fname)
-
-	// find the difference
-	diff := findDiff(left, right)
-	fmt.Printf("Total difference: %d\n", diff)
-
-	// find similarity score
-	similarity := findSimilarity(left, right)
-	fmt.Printf("Similarity score: %d\n", similarity)
 }

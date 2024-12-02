@@ -1,13 +1,28 @@
-package main
+package day2
 
 import (
 	"fmt"
 	"log"
 	"math"
-	"os"
 
 	"github.com/markwatson/advent_2024/pkg/util"
 )
+
+type Day2 struct {
+
+}
+
+func (d Day2) Run(inputFile string) {
+		reports := readInFile(inputFile)
+
+	// part 1
+	count, countAllowance := countSafe(reports)
+	fmt.Printf("\n\nNumber of safe reports: %d\n", count)
+
+	// part 2
+	fmt.Printf("Number of safe reports with allowance: %d\n", countAllowance)
+
+}
 
 type Level int64
 type Report []Level
@@ -111,22 +126,3 @@ func countSafe(reports []Report) (int, int) {
 	}
 	return count, countAllowance + count
 }
-
-func main() {
-	// check arguments
-	if len(os.Args) != 2 {
-		log.Fatalf("Usage: %s <filename>", os.Args[0])
-    }
-	fname := os.Args[1]
-
-	// read
-	reports := readInFile(fname)
-
-	// part 1
-	count, countAllowance := countSafe(reports)
-	fmt.Printf("\n\nNumber of safe reports: %d\n", count)
-
-	// part 2
-	fmt.Printf("Number of safe reports with allowance: %d\n", countAllowance)
-}
-
