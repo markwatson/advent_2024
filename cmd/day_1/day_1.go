@@ -9,18 +9,14 @@ import (
 	"slices"
 	"strconv"
 	"strings"
-)
 
-func check(e error) {
-    if e != nil {
-        log.Fatal(e)
-    }
-}
+	"github.com/markwatson/pkg/util"
+)
 
 func readInFile(filename string) ([]int64, []int64) {
 	// open file and read line by line
 	file, err := os.Open(filename)
-    check(err)
+    util.Check(err)
 	defer file.Close()
 
 	// Outputs
