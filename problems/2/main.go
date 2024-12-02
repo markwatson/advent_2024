@@ -17,17 +17,17 @@ func check(e error) {
     }
 }
 
-type level int64
-type report []level
+type Level int64
+type Report []Level
 
-func readInFile(filename string) ([]report) {
+func readInFile(filename string) ([]Report) {
 	// open file and read line by line
 	file, err := os.Open(filename)
     check(err)
 	defer file.Close()
 
 	// Outputs
-	var reports []report
+	var reports []Report
 
 	// Read in
 	scanner := bufio.NewScanner(file)
@@ -35,11 +35,11 @@ func readInFile(filename string) ([]report) {
 		line := scanner.Text()
 		words := strings.Fields(line)
 
-		var report report
+		var report Report
 		for _, word := range words {
 			value, err := strconv.ParseInt(word, 10, 64)
 			check(err)
-			report = append(report, level(value))
+			report = append(report, Level(value))
 		}
 		reports = append(reports, report)
 	}
@@ -54,8 +54,8 @@ func readInFile(filename string) ([]report) {
 // A report is safe if both of the following are true:
 // - The levels are either all increasing or all decreasing.
 // - Any two adjacent levels differ by at least one and at most three.
-func isSafe(report report) bool {
-	fmt.Printf("## Checking report: %v\n", report)
+func isSafe(report Report) bool {
+	log.Printf("## Checking report: %v\n", report)
 	// Check if increasing
 	increasing := true
 	for i := 1; i < len(report); i++ {
@@ -84,22 +84,55 @@ func isSafe(report report) bool {
 		}
 	}
 
-	fmt.Printf("Increasing: %v, Decreasing: %v, Differ: %v\n", increasing, decreasing, differ)
+	log.Printf("Increasing: %v, Decreasing: %v, Differ: %v\n", increasing, decreasing, differ)
 
 	return (increasing || decreasing) && differ
 }
 
-func countSafe(reports []report) int {
-	count := 0
-	for _, report := range reports {
-		if isSafe(report) {
-			fmt.Printf("=> Safe report: %v\n", report)
-			count++
-		} else {
-			fmt.Printf("=> Unsafe report: %v\n", report)
+func remove(slice []Level, s int) []Level {
+    return append(slice[:s], slice[s+1:]...)
+}
+
+// A report is safe if both of the following are true:
+// - The levels are either all increasing or all decreasing.
+// - Any two adjacent levels differ by at least one and at most three.
+// But we also "tolerate a single bad level".
+func isSafeAllowance(report Report) bool {
+	// is safe
+	if isSafe(report) {
+		return true
+	}
+
+	// allowance
+	for i := 0; i < len(report); i++ {
+		// TODO: this does two copies - inefficient
+		reportPrime := make(Report, len(report))
+		copy(reportPrime, report)
+		reportPrime = remove(reportPrime, i)
+
+		if isSafe(reportPrime) {
+			return true
 		}
 	}
-	return count
+
+	return false
+}
+
+func countSafe(reports []Report) (int, int) {
+	count := 0
+	countAllowance := 0
+	for _, report := range reports {
+		if isSafe(report) {
+			log.Printf("=> Safe report: %v\n", report)
+			count++
+		} else if isSafeAllowance(report) {
+			log.Printf("=> Safe report with allowance: %v\n", report)
+			countAllowance++
+		} else {
+			log.Printf("=> Unsafe report: %v\n", report)
+		}
+	}
+	return count, countAllowance + count
 }
 
 func main() {
@@ -112,8 +145,11 @@ func main() {
 	// read
 	reports := readInFile(fname)
 
-	// process
-	count := countSafe(reports)
+	// part 1
+	count, countAllowance := countSafe(reports)
 	fmt.Printf("\n\nNumber of safe reports: %d\n", count)
+
+	// part 2
+	fmt.Printf("Number of safe reports with allowance: %d\n", countAllowance)
 }
 
