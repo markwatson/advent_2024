@@ -55,7 +55,7 @@ func readInFile(filename string) ([]int64, []int64) {
 	return leftValues, rightValues
 }
 
-func solve(left []int64, right []int64) int64 {
+func findDiff(left []int64, right []int64) int64 {
 	if len(left) != len(right) {
 		log.Fatal("Error: left and right arrays are not the same length")
 	}
@@ -74,6 +74,25 @@ func solve(left []int64, right []int64) int64 {
 	return totalDiff
 }
 
+// This is overly optimized and not necessary for this problem
+func findSimilarity(left []int64, right []int64) int64 {
+	// calculate occurrences of each number
+	occurrences := make(map[int64]int64)
+	for _, val := range right {
+		occurrences[val] += 1
+	}
+
+	var totalScore int64
+	for _, val := range left {
+		i, ok := occurrences[val]
+		if ok {
+			totalScore += val * i
+		} // Otherwise don't increase score
+	}
+
+	return totalScore
+}
+
 func main() {
 	// check arguments
 	if len(os.Args) != 2 {
@@ -84,9 +103,11 @@ func main() {
 	// read
 	left, right := readInFile(fname)
 
-	// solve
-	result := solve(left, right)
+	// find the difference
+	diff := findDiff(left, right)
+	fmt.Printf("Total difference: %d\n", diff)
 
-	// print result
-	fmt.Printf("Total difference: %d\n", result)
+	// find similarity score
+	similarity := findSimilarity(left, right)
+	fmt.Printf("Similarity score: %d\n", similarity)
 }
