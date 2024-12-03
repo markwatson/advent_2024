@@ -28,7 +28,7 @@ func (d Day1) Run(inputFile string) {
 
 func readInFile(filename string) ([]int64, []int64) {
 	// Read in numbers
-	contents, err := util.ReadInNumbers(filename, int64(0))
+	contents, err := util.ReadNumbers(filename, int64(0))
 	util.Check(err)
 
 	// Outputs

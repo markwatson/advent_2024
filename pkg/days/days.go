@@ -5,6 +5,8 @@ import (
 
 	"github.com/markwatson/advent_2024/pkg/days/day1"
 	"github.com/markwatson/advent_2024/pkg/days/day2"
+	"github.com/markwatson/advent_2024/pkg/days/day3"
+	"github.com/markwatson/advent_2024/pkg/util"
 )
 
 type RunnableDay interface {
@@ -12,7 +14,7 @@ type RunnableDay interface {
 }
 
 type Day struct {
-	Name string
+	Name   string
 	Runner RunnableDay
 }
 
@@ -33,4 +35,5 @@ func Run(day string, inputFile string) {
 func RegisterAllDays() {
 	Register("1", &day1.Day1{})
 	Register("2", &day2.Day2{})
+	Register("3", util.CheckFatal(day3.NewDay3()))
 }

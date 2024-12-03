@@ -25,4 +25,4 @@ go.work.sum
 .env
 
 # Bins
-./advent_2024
+advent_2024

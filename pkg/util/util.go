@@ -11,9 +11,24 @@ import (
 
 // If an error is not nil, log and quit.
 func Check(e error) {
-    if e != nil {
-        log.Fatal(e)
-    }
+	if e != nil {
+		log.Fatal(e)
+	}
+}
+
+func CheckFatal[T any](v T, e error) T {
+	if e != nil {
+		log.Fatal(e)
+	}
+	return v
+}
+
+func ReadString(filename string) (string, error) {
+	buffer, err := os.ReadFile(filename)
+	if err != nil {
+		return "", err
+	}
+	return string(buffer), nil
 }
 
 // Reads a table of numbers from a file. For example:
@@ -22,15 +37,15 @@ func Check(e error) {
 //
 // Would return:
 // [[1, 2, 3], [4, 5, 6]]
-// 
+//
 // The type of the numbers read in is determined by the type of v.
 // The type of v must be int64 or float64, unless we extend this.
-func ReadInNumbers[V int64 | float64](filename string, v V) ([][]V, error) {
+func ReadNumbers[V int64 | float64](filename string, v V) ([][]V, error) {
 	// open file and read line by line
 	file, err := os.Open(filename)
-    if err != nil {
-        return nil, err
-    }
+	if err != nil {
+		return nil, err
+	}
 	defer file.Close()
 
 	// Outputs

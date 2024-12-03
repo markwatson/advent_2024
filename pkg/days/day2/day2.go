@@ -28,7 +28,7 @@ type Level int64
 type Report []Level
 
 func readInFile(filename string) ([]Report) {
-	contents, err := util.ReadInNumbers(filename, int64(0))
+	contents, err := util.ReadNumbers(filename, int64(0))
 	util.Check(err)
 
 	var reports []Report
