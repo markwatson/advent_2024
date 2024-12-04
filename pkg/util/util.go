@@ -9,6 +9,35 @@ import (
 	"strings"
 )
 
+// Simple byte matrix
+type Matrix struct {
+	Data [][]byte
+	Width int
+	Height int
+}
+
+func NewMatrix(data []string) *Matrix {
+	m := new(Matrix)
+	m.Data = make([][]byte, len(data))
+	m.Width = len(data[0])
+	m.Height = len(data)
+	for i, row := range data {
+		if len(row) != m.Width {
+			panic("Rows must be the same length")
+		}
+		m.Data[i] = []byte(row)
+	}
+	return m
+}
+
+// Gets a value, defaulting to 0 (nul) if out of bounds
+func (m *Matrix) Get(r int, c int) byte {
+	if r < 0 || c < 0 || r >= len(m.Data) || c >= len(m.Data[r]) {
+		return 0
+	}
+	return m.Data[r][c]
+}
+
 // If an error is not nil, log and quit.
 func Check(e error) {
 	if e != nil {
@@ -21,6 +50,46 @@ func CheckFatal[T any](v T, e error) T {
 		log.Fatal(e)
 	}
 	return v
+}
+
+func ReadLines(filename string) ([]string, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	output := make([]string, 0)
+	
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if len(line) != 0 {
+			output = append(output, line)
+		}
+	}
+
+	return output, nil
+}
+
+func ReadGrid(filename string) ([][]rune, error) {
+	file, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	output := make([][]rune, 0)
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := scanner.Text()
+		if len(line) != 0 {
+			output = append(output, []rune(line))
+		}
+	}
+
+	return output, nil
 }
 
 func ReadString(filename string) (string, error) {
