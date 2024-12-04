@@ -12,7 +12,7 @@ func main() {
 	// check arguments
 	if len(os.Args) != 3 {
 		log.Fatalf("Usage: %s <day> <input|example>", os.Args[0])
-    }
+	}
 	dayName := os.Args[1]
 	input := os.Args[2]
 
