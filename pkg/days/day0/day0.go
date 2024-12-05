@@ -6,8 +6,6 @@ import (
 	"github.com/markwatson/advent_2024/pkg/util"
 )
 
-// Template for adding a new day
-
 type Day0 struct {
 
 }

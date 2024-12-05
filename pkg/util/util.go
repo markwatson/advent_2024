@@ -9,6 +9,21 @@ import (
 	"strings"
 )
 
+// Default helpers for slices
+func GetOrDefault[T any](m []T, key int, def T) T {
+	if key < 0 || key >= len(m) {
+		return def
+	}
+	return m[key]
+}
+
+func GetOrDefault2d[T any](m [][]T, r int, c int, def T) T {
+	if r < 0 || c < 0 || r >= len(m) || c >= len(m[r]) {
+		return def
+	}
+	return m[r][c]
+}
+
 // Simple byte matrix
 type Matrix struct {
 	Data [][]byte
