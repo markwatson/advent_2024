@@ -3,7 +3,7 @@ Repository to contain solutions to [Advent of Code 2024](https://adventofcode.co
 super rough code - written in golang just for fun to experiment. This code
 uses many bad practices.
 
-> **Note: Spoilers containing Advent of Code solutions (obviously)**
+**This repository contains spoilers for Advent of Code problems (obviously).**
 
 ## Setup
 
@@ -29,3 +29,4 @@ Adding days:
 ```
 Then update `./pkg/day/days.go` to call the new day.
 
+The whole "days" setup I created seems kinda messy and pointless... It works though, so I'm using it for now.

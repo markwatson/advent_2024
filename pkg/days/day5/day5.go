@@ -9,7 +9,8 @@ import (
 	"github.com/markwatson/advent_2024/pkg/util"
 )
 
-// Note this solution isn't very optimized, but it's fast enough on the puzzle input:
+// This problem was fun. I started by writing a super slow implementation, despite the warnings in
+// the problem text. It ended up being fast enough though:
 // time go run main.go 5 input
 // Total: 5108
 // Total part 2: 7380
@@ -17,6 +18,14 @@ import (
 // real	0m0.464s
 // user	0m0.163s
 // sys	0m0.221s
+//
+// Because I wrote the first part in such an odd way, part 2 was a bit harder. I ended up
+// using a simple topological sort function to reorder based on the filtered rules for
+// each list of page numbers. This would need to be modified a bit if there are any pages
+// not included in the rules.
+//
+// My input parsing code is kinda garbage. Go feels a lot more verbose, plus using
+// copilot results in generating a lot of code without realizing it.
 
 type Day5 struct {
 
