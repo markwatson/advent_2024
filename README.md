@@ -10,7 +10,7 @@ uses many bad practices.
 You just need [go 1.23](https://go.dev/) installed.
 
 ## Usage
-Running a day:
+### Running a day
 ```bash
 go run main.go 1 example
 ```
@@ -18,12 +18,12 @@ go run main.go 1 example
 Note the input files are not included
 since they're unique to each user and [they ask not to share them](https://adventofcode.com/2024/about#faq_copying). You can register and download them at the site.
 
-Create data files for each day:
+### Create data files for each day
 ```bash
 ./scripts/mk-data-dir.sh
 ```
 
-Adding days:
+### Adding days
 ```bash
 ./scripts/add-day.sh 1
 ```
