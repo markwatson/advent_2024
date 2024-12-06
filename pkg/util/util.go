@@ -24,6 +24,12 @@ func GetOrDefault2d[T any](m [][]T, r int, c int, def T) T {
 	return m[r][c]
 }
 
+// Row, column position
+type Position struct {
+	R int
+	C int
+}
+
 // Simple byte matrix
 type Matrix struct {
 	Data [][]byte
@@ -51,6 +57,15 @@ func (m *Matrix) Get(r int, c int) byte {
 		return 0
 	}
 	return m.Data[r][c]
+}
+
+func (m *Matrix) String() string {
+	var sb strings.Builder
+	for _, row := range m.Data {
+		sb.WriteString(string(row))
+		sb.WriteString("\n")
+	}
+	return sb.String()
 }
 
 // If an error is not nil, log and quit.
