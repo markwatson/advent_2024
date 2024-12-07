@@ -9,6 +9,7 @@ import (
 	"github.com/markwatson/advent_2024/pkg/days/day4"
 	"github.com/markwatson/advent_2024/pkg/days/day5"
 	"github.com/markwatson/advent_2024/pkg/days/day6"
+	"github.com/markwatson/advent_2024/pkg/days/day7"
 	"github.com/markwatson/advent_2024/pkg/util"
 )
 
@@ -42,4 +43,5 @@ func RegisterAllDays() {
 	Register("4", &day4.Day4{})
 	Register("5", &day5.Day5{})
 	Register("6", &day6.Day6{})
+	Register("7", &day7.Day7{})
 }
