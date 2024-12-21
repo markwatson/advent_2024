@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "build": "go build ./...",
+    "launch": "go run main.go 10 example"
+  }
+}
