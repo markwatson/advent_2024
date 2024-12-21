@@ -59,6 +59,30 @@ func (m *Matrix) Get(r int, c int) byte {
 	return m.Data[r][c]
 }
 
+
+
+// func (m *Matrix) GetUp(r int, c int) byte {
+// 	return m.Get(r - 1, c)
+// }
+
+// func UpIdx(r int, c int) (int, int) {
+// 	return r - 1, c
+// }
+
+// func LeftIdx(r int, c int) (int, int) {
+// 	return r, c - 1
+// }
+
+// func RightIdx(r int, c int) (int, int) {
+// 	return r, c + 1
+// }
+
+// func DownIdx(r int, c int) (int, int) {
+// 	return r + 1, c
+// }
+
+
+
 func (m *Matrix) String() string {
 	var sb strings.Builder
 	for _, row := range m.Data {
